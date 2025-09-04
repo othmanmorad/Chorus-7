@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+//fedeo22
+void PrintFibonaccciUsingRecurssion(short Number, int prev1 , int prev2 )
+{
+    
+    int FebNumber = 0;
+
+   
+
+    if (Number > 0)
+    {
+
+
+        FebNumber = prev2 + prev1;
+        cout << FebNumber << "   ";
+
+        prev2 = prev1;
+        prev1 = FebNumber;
+
+        PrintFibonaccciUsingRecurssion(Number - 1, prev1, prev2);
+    }
+}
+int main()
+{
+    PrintFibonaccciUsingRecurssion(10,0,1);
+    
+    system("pause>0");
+}
