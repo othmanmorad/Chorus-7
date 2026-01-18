@@ -1,83 +1,75 @@
-#include <iostream>
+#include<iostream>
 #include<string>
 using namespace std;
 
-enum enPrimeOrNotPrimeNumber { Prime = 1, NotPrime = 2 };
 
-enPrimeOrNotPrimeNumber CheckPrimeOrNotPrimeNumber(int number)
+enum enWhatToCount { SmallLetter = 0,CapitalLetter=1 , All=2};
+
+short CountLetters (string S1, enWhatToCount WhatToCount=enWhatToCount::All)
 {
-
-
-    if (number < 2)
+    if (WhatToCount == enWhatToCount::All)
     {
-        return enPrimeOrNotPrimeNumber::NotPrime;
-    }
-    int m = round(number / 2);
-    for (int counter = 2;counter <= m;counter++)
-    {
-        if (number % counter == 0)
-            return enPrimeOrNotPrimeNumber::NotPrime;
+        return S1.length();
     }
 
-    return enPrimeOrNotPrimeNumber::Prime;
-
-}
-
-
-int RandoomNumber(int From, int To)
-{
-    int randNum = rand() % (To - From + 1) + From;
-    return randNum;
-}
-
-
-void FillArrayByRandoomNumber(int arr[100], int& arrLength)
-{
-    cout << "Enter Number of element : " << endl;
-    cin >> arrLength;
-    for (int i = 0;i <= arrLength;i++)
-        arr[i] = RandoomNumber(1, 100);
-    cout << "\n";
-}
-void CopyOnlyPrimeryNumber(int arrSource[100], int arrDestination [100], int arrLength , int &arr2Length)
-{
-    int counter = 0;
-    for (int i = 0;i <= arrLength;i++)
+    short counter = 0;
+    for (short i = 0;i <= S1.length();i++) 
     {
-        if (CheckPrimeOrNotPrimeNumber(arrSource[i]) == enPrimeOrNotPrimeNumber::Prime)
+        if (WhatToCount == enWhatToCount::CapitalLetter && isupper(S1[i]))
+            counter++;
+    }
+   
+
+    for (short i = 0;i <= S1.length();i++)
+    {
+        if (WhatToCount == enWhatToCount::SmallLetter && islower(S1[i]))
+            counter++;
+    }
+    return counter;
+}
+
+
+
+string ReadText()
+{
+    string Text;
+    cout << "Please enter Your string \n";
+    getline(cin, Text);
+    return Text;
+}
+int CountCapitalLetters(string S1)
+{ 
+    short counter = 0;
+    for (short i = 0;i <= S1.length();i++)
+    {
+        if (isupper(S1[i]))
         {
-            arrDestination[counter] = arrSource[i];
             counter++;
         }
     }
-    arr2Length = --counter;
+    return counter;
 }
 
-void PrintArray(int arr[100], int arrLength)
+int CountSmallLetters(string S1)
 {
-    for (int i = 0;i <= arrLength;i++)
-        cout << arr[i] << " ";
+    return S1.length() - CountCapitalLetters(S1);
 }
-
 
 int main()
 {
-    srand((unsigned)time(NULL));
-    int arr[100];
-    int arrLength;
 
-    FillArrayByRandoomNumber(arr, arrLength);
+    string S1 = ReadText();
 
-    int arr2[100];
-    int arr2Length;
+    cout << "\nString Length : " << S1.length() << endl;
+    cout << "\nNumber of Capital leter : " << CountCapitalLetters(S1) << endl;
+    cout << "\nNumber of small leter : " << CountSmallLetters(S1) << endl;
 
-    CopyOnlyPrimeryNumber(arr, arr2, arrLength, arr2Length);
 
-    cout << "\nArray 1 elements :\n";
-    PrintArray(arr, arrLength);
+    cout << "\nMetohd by enum\n";
 
-    cout << "\nPrime number in Array :\n";
-    PrintArray(arr2, arr2Length);
+    cout << "\nString Length : " << CountLetters(S1) << endl;
+    cout << "\nNumber of Capital leter : " << CountLetters(S1,enWhatToCount::CapitalLetter) << endl;
+    cout << "\nNumber of small leter : " << CountLetters(S1,enWhatToCount::SmallLetter) << endl;
+
 
 }
-
